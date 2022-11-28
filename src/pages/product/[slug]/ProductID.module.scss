@@ -1,0 +1,31 @@
+.root {
+  @apply px-4 py-4 lg:py-6 lg:px-6;
+}
+.container {
+  @apply mx-auto grid max-w-screen-xl;
+}
+.notFound {
+  @apply text-center text-2xl font-bold text-red-500;
+}
+.content {
+  @apply grid grid-cols-1 gap-10 md:grid-cols-2;
+}
+.images {
+  // @apply grid grid-cols-1;
+  @apply h-full;
+}
+.imagesContent {
+  @apply aspect-w-1 aspect-h-1;
+}
+.detail {
+  @apply flex flex-col md:py-16;
+}
+.productTitle {
+  @apply mb-10 text-5xl font-thin;
+}
+.productDetail {
+  @apply mb-10;
+}
+.productDetailContent {
+  @apply grid grid-cols-2 leading-6 text-gray-500;
+}
