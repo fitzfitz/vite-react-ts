@@ -27,7 +27,6 @@ function TMAvatar({
   className,
 }: Props) {
   const [isError, setIsError] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
   const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     setIsError(true);
     e.currentTarget.src = "https://avatars.dicebear.com/api/bottts/:seed.svg";
@@ -57,8 +56,6 @@ function TMAvatar({
           alt="@tm-wear"
           loading="lazy"
           onError={onImageError}
-          onLoadStart={() => setIsLoad(true)}
-          onLoadedData={() => setIsLoad(false)}
         />
       ) : null}
       {isOnline ? (

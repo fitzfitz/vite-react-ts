@@ -9,7 +9,7 @@ const productListFetcher = async ({
   headers,
 }: {
   url: string;
-  headers: any;
+  headers: { [key: string]: string | undefined };
 }) =>
   await client
     .get(url, {
@@ -24,7 +24,7 @@ const productDetailFetcher = async ({
   headers,
 }: {
   url: string;
-  headers: any;
+  headers: { [key: string]: string | undefined };
 }) =>
   await client
     .get(url, {

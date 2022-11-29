@@ -1,3 +1,4 @@
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SWRConfig } from "swr";
 import LoginScreen from "./pages/auth/login/page";

@@ -1,3 +1,4 @@
+import React from "react";
 import { differenceInDays } from "date-fns";
 import styles from "./Card.module.scss";
 import { Carousel } from "flowbite-react";
@@ -10,7 +11,11 @@ interface Props {
 
 function ProductCard({ product, onClick }: Props) {
   return (
-    <div className={styles.card} onClick={() => onClick?.(product)}>
+    <div
+      className={styles.card}
+      onClick={() => onClick?.(product)}
+      aria-hidden="true"
+    >
       <div>
         <div className={styles.container}>
           {product.product_images.length === 1 ? (

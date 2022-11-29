@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { productDetailFetcher } from "@tm-wear/app/api/fetcher/product";
 import { Carousel } from "flowbite-react";
 
-function ProductDetailScreen({}) {
+function ProductDetailScreen() {
   const auth = useAuthStore();
   const { slug, user } = useParams();
   const { data: product, error } = useSwr(
@@ -51,22 +51,40 @@ function ProductDetailScreen({}) {
                   <label className={styles.productTitle}>{product.name}</label>
                   <div className={styles.productDetail}>
                     <div className={styles.productDetailContent}>
-                      <label className={styles.productDetailText}>Varian</label>
-                      <label className={styles.productDetailText}>
+                      <label
+                        htmlFor="variant"
+                        className={styles.productDetailText}
+                      >
+                        Varian
+                      </label>
+                      <label id="variant" className={styles.productDetailText}>
                         {product.variant || "-"}
                       </label>
                     </div>
 
                     <div className={styles.productDetailContent}>
-                      <label className={styles.productDetailText}>Harga</label>
+                      <label
+                        htmlFor="variant"
+                        className={styles.productDetailText}
+                      >
+                        Harga
+                      </label>
 
                       {product?.product_price ? (
-                        <label className={styles.productDetailText}>
+                        <label
+                          id="productPrice"
+                          className={styles.productDetailText}
+                        >
                           Rp.{" "}
-                          {(+product?.product_price?.price!)?.toLocaleString()}
+                          {(+product?.product_price?.price)?.toLocaleString()}
                         </label>
                       ) : (
-                        <label className={styles.productDetailText}>-</label>
+                        <label
+                          htmlFor="productPrice"
+                          className={styles.productDetailText}
+                        >
+                          -
+                        </label>
                       )}
                     </div>
                   </div>

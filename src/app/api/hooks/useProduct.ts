@@ -3,8 +3,17 @@ import useSWRInfinite from "swr/infinite";
 type Props = {
   url: string;
   limit?: number;
-  fetcher?: any;
-  extraHeaders?: any;
+  fetcher: (args_0: {
+    url: string;
+    headers:
+      | {
+          [key: string]: string;
+        }
+      | undefined;
+  }) => void[];
+  extraHeaders?: {
+    [key: string]: string | undefined;
+  };
 };
 
 export const useProductPagination = <T>({
@@ -26,6 +35,7 @@ export const useProductPagination = <T>({
     fetcher,
     {
       revalidateFirstPage: false,
+      persistSize: true,
     }
   );
 
@@ -36,7 +46,7 @@ export const useProductPagination = <T>({
 
   const isEmpty = data?.[0]?.length === 0;
   const isReachingEnd =
-    isEmpty || (data && data[data.length - 1]?.length! < limit);
+    isEmpty || (data && data[data.length - 1]?.length < limit);
 
   const dataSet = data?.flat() as T[];
 
