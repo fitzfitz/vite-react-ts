@@ -4,13 +4,12 @@ import {
   ProductListResponseType,
 } from "../types/product";
 
-const productListFetcher = async ({
-  url,
-  headers,
-}: {
+type Props = {
   url: string;
   headers: { [key: string]: string | undefined };
-}) =>
+};
+
+const productListFetcher = async ({ url, headers }: Props) =>
   await client
     .get(url, {
       headers,
@@ -19,13 +18,7 @@ const productListFetcher = async ({
       return data.success ? data?.data?.data : null;
     });
 
-const productDetailFetcher = async ({
-  url,
-  headers,
-}: {
-  url: string;
-  headers: { [key: string]: string | undefined };
-}) =>
+const productDetailFetcher = async ({ url, headers }: Props) =>
   await client
     .get(url, {
       headers,

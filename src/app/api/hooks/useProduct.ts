@@ -3,14 +3,8 @@ import useSWRInfinite from "swr/infinite";
 type Props = {
   url: string;
   limit?: number;
-  fetcher: (args_0: {
-    url: string;
-    headers:
-      | {
-          [key: string]: string;
-        }
-      | undefined;
-  }) => void[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetcher: any;
   extraHeaders?: {
     [key: string]: string | undefined;
   };
