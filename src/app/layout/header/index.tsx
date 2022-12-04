@@ -1,6 +1,5 @@
 import React from "react";
-import { FcHome, FcKey, FcLock } from "react-icons/fc";
-import { TbHanger } from "react-icons/tb";
+import { FcHome, FcKey, FcLock, FcShop, FcFilingCabinet } from "react-icons/fc";
 import { AuthUserDataType } from "@tm-wear/app/api/types/auth";
 import styles from "./Header.module.scss";
 import TMAvatar from "@tm-wear/components/TMAvatar";
@@ -19,16 +18,21 @@ function Header({ user, homeUrl, logout }: Props) {
         <div className={styles.container}>
           <TMLink to={homeUrl ? homeUrl : "/"} className="flex items-center">
             <span className={styles.logoText}>
-              <TbHanger className="-rotate-90 text-blue-400" />
+              <FcShop className="mr-2" />
               The Monograf
             </span>
           </TMLink>
+
           <div className={styles.navListContainer}>
             <ul className={styles.navList}>
               <li>
-                <a href="/" className={styles.navListItem} aria-current="page">
+                <TMLink
+                  title="Lihat semua produk"
+                  to={`/`}
+                  className={styles.navListItem}
+                >
                   <FcHome size={"19px"} />
-                </a>
+                </TMLink>
               </li>
               {!user ? (
                 <li>
@@ -42,29 +46,40 @@ function Header({ user, homeUrl, logout }: Props) {
                 </li>
               ) : null}
               {user ? (
-                <>
-                  <li>
-                    <button
-                      title="Logout Reseller"
-                      className={styles.navListItem}
-                      onClick={logout}
-                    >
-                      <FcKey size={"19px"} />
-                    </button>
-                  </li>
-                  <li>
-                    <div className={styles.navListItem}>
-                      <TMAvatar
-                        image={
-                          "https://avatars.dicebear.com/api/bottts/:dans.svg"
-                        }
-                        fullname={user.name}
-                        isOnline
-                        size="xs"
-                      />
-                    </div>
-                  </li>
-                </>
+                <li>
+                  <TMLink
+                    title="Lihat produk anda"
+                    to={`/@${user.username}`}
+                    className={styles.navListItem}
+                  >
+                    <FcFilingCabinet size={"19px"} />
+                  </TMLink>
+                </li>
+              ) : null}
+              {user ? (
+                <li>
+                  <button
+                    title="Logout Reseller"
+                    className={styles.navListItem}
+                    onClick={logout}
+                  >
+                    <FcKey size={"19px"} />
+                  </button>
+                </li>
+              ) : null}
+              {user ? (
+                <li>
+                  <div className={styles.navListItem}>
+                    <TMAvatar
+                      image={
+                        "https://avatars.dicebear.com/api/bottts/:dans.svg"
+                      }
+                      fullname={user.name}
+                      onlineIndicator
+                      size="xs"
+                    />
+                  </div>
+                </li>
               ) : null}
             </ul>
           </div>

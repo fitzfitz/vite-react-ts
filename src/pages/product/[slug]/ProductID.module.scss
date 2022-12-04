@@ -12,7 +12,7 @@
 }
 .images {
   // @apply grid grid-cols-1;
-  @apply h-full;
+  @apply -m-5 h-full md:m-0;
 }
 .imagesContent {
   @apply aspect-w-1 aspect-h-1;

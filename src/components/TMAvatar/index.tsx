@@ -2,7 +2,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { fcx } from "@fitzzz/utils";
 
 interface Props {
-  isOnline?: boolean;
+  onlineIndicator?: boolean;
   image?: string | null | undefined;
   fullname: string | null | undefined;
   size?: "xs" | "sm" | "md";
@@ -20,7 +20,7 @@ function createNameInitial(name: string | null | undefined) {
 }
 
 function TMAvatar({
-  isOnline,
+  onlineIndicator,
   image,
   fullname,
   size = "sm",
@@ -58,7 +58,7 @@ function TMAvatar({
           onError={onImageError}
         />
       ) : null}
-      {isOnline ? (
+      {onlineIndicator ? (
         <div
           className={`absolute right-0 top-0 z-[2] ${fcx(
             size === "xs"

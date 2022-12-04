@@ -15,8 +15,20 @@ client.interceptors.request.use(
     };
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.log(error);
+    return Promise.reject(error);
+  }
 );
+
+client.interceptors.response.use(undefined, (error) => {
+  const logout = useAuthStore.getState().logout;
+  if (error?.response?.status === 401) {
+    logout();
+    window.location.href = `/login?lastPage=${location.pathname}&statusCode=401`;
+  }
+  return Promise.reject(error);
+});
 
 export type { AxiosResponse, AxiosError };
 

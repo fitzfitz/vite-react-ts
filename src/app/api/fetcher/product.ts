@@ -1,12 +1,15 @@
 import client, { AxiosResponse } from "@tm-wear/app/utils/axiosClient";
 import {
-  ProductDetailResponseType,
+  ProductCategoryType,
   ProductListResponseType,
+  ProductType,
 } from "../types/product";
+
+import { BaseApiResponse } from "../types/base";
 
 type Props = {
   url: string;
-  headers: { [key: string]: string | undefined };
+  headers?: { [key: string]: string | undefined };
 };
 
 const productListFetcher = async ({ url, headers }: Props) =>
@@ -15,7 +18,7 @@ const productListFetcher = async ({ url, headers }: Props) =>
       headers,
     })
     .then(({ data }: AxiosResponse<ProductListResponseType>) => {
-      return data.success ? data?.data?.data : null;
+      return data.success ? data?.data : null;
     });
 
 const productDetailFetcher = async ({ url, headers }: Props) =>
@@ -23,11 +26,21 @@ const productDetailFetcher = async ({ url, headers }: Props) =>
     .get(url, {
       headers,
     })
-    .then(({ data }: AxiosResponse<ProductDetailResponseType>) => {
+    .then(({ data }: AxiosResponse<BaseApiResponse<ProductType>>) => {
       return data.success ? data?.data : null;
     })
     .catch(({ response: { data } }) => {
       throw data;
     });
 
-export { productListFetcher, productDetailFetcher };
+const productCategoryFetcher = async ({ url }: Props) =>
+  await client
+    .get(url)
+    .then(({ data }: AxiosResponse<BaseApiResponse<ProductCategoryType[]>>) => {
+      return data.success ? data?.data : null;
+    })
+    .catch(({ response: { data } }) => {
+      throw data;
+    });
+
+export { productListFetcher, productDetailFetcher, productCategoryFetcher };

@@ -1,5 +1,4 @@
 import client, { AxiosResponse } from "@tm-wear/app/utils/axiosClient";
-import {} from "axios";
 import { ResellerResponseType } from "../types/reseller";
 
 const resellerFetcher = async (url: string) =>

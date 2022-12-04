@@ -1,3 +1,10 @@
+type ProductParamsType = {
+  keyword?: string;
+  page?: number;
+  limit?: number;
+  product_category_id?: number;
+};
+
 type ProductImageType = {
   createdAt: string;
   id: number;
@@ -10,10 +17,12 @@ type ProductImageType = {
 type ProductPriceType = {
   createdAt: string | null;
   id: number;
-  price: string | number;
+  price: string;
   productId: number;
   resellerId: number;
   updatedAt: string | null;
+  description: string | null;
+  enable: boolean;
 };
 
 type ProductType = {
@@ -25,10 +34,19 @@ type ProductType = {
   productCategoryId: number;
   product_images: ProductImageType[];
   product_price: ProductPriceType | undefined;
+  price: string;
   updatedAt: string | null;
   slug: string;
-  price: number;
   variant: string;
+};
+
+type ProductCategoryType = {
+  category: string;
+  createdAt: string | null;
+  deletedAt: string | null;
+  id: number;
+  image: string | null;
+  updatedAt: string | null;
 };
 
 type ProductListResponseType = {
@@ -39,11 +57,6 @@ type ProductListResponseType = {
   success?: boolean;
 };
 
-type ProductDetailResponseType = {
-  data?: ProductType;
-  success?: boolean;
-};
-
 type ProductErrorType = {
   message?: string;
   success?: boolean;
@@ -51,9 +64,10 @@ type ProductErrorType = {
 
 export type {
   ProductListResponseType,
-  ProductDetailResponseType,
   ProductType,
   ProductImageType,
   ProductPriceType,
   ProductErrorType,
+  ProductParamsType,
+  ProductCategoryType,
 };

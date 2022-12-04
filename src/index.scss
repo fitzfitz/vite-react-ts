@@ -15,4 +15,7 @@
   body {
     @apply leading-[1.43] tracking-[0.01071em] text-gray-700;
   }
+  #root {
+    overflow: hidden;
+  }
 }

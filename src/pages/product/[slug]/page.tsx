@@ -1,23 +1,33 @@
-import React from "react";
-import useSwr from "swr";
+import React, { useState } from "react";
 import UserMain from "@tm-wear/app/layout/main/UserMain";
 import useAuthStore from "@tm-wear/app/store/zustand/auth/useAuth";
 import styles from "./ProductID.module.scss";
 import { useParams } from "react-router-dom";
 import { productDetailFetcher } from "@tm-wear/app/api/fetcher/product";
 import { Carousel } from "flowbite-react";
+import { FiEdit, FiPlusSquare } from "react-icons/fi";
+import { useQuery } from "@tanstack/react-query";
+import ProductUpdateForm from "@tm-wear/app/components/pages/product/ProductUpdateForm";
 
 function ProductDetailScreen() {
   const auth = useAuthStore();
-  const { slug, user } = useParams();
-  const { data: product, error } = useSwr(
-    { url: `/catalog/product/${slug}`, headers: { reseller: user } },
-    productDetailFetcher
+  const { slug, user: reseller } = useParams();
+  const [drawer, setDrawer] = useState(false);
+
+  const {
+    data: product,
+    error,
+    refetch,
+  } = useQuery([slug || "product-detail"], () =>
+    productDetailFetcher({
+      url: `/catalog/product/${slug}`,
+      headers: { reseller },
+    })
   );
 
   return (
     <UserMain
-      homeUrl={user ? `/@${user}` : "/"}
+      homeUrl={reseller ? `/@${reseller}` : "/"}
       title={product?.name}
       auth={auth}
     >
@@ -31,6 +41,27 @@ function ProductDetailScreen() {
             </>
           ) : product ? (
             <>
+              {auth.user ? (
+                <div className=" mb-4 flex items-center justify-between rounded-lg bg-green-100 p-3 text-sm text-black/60">
+                  {product?.product_price?.price ? (
+                    <span>Atur ulang produk ini?</span>
+                  ) : (
+                    <span>Anda belum mengatur produk ini. Atur sekarang?</span>
+                  )}
+                  <div>
+                    {product?.product_price?.price ? (
+                      <button onClick={() => setDrawer(true)}>
+                        <FiEdit size={17} />
+                      </button>
+                    ) : (
+                      <button onClick={() => setDrawer(true)}>
+                        <FiPlusSquare size={17} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : null}
+
               <div className={styles.content}>
                 <div className={styles.images}>
                   <div className={styles.imagesContent}>
@@ -90,7 +121,8 @@ function ProductDetailScreen() {
                   </div>
                   <div className={styles.productDesc}>
                     <label className={styles.productDescText}>
-                      {product.description}
+                      {product?.product_price?.description ||
+                        product.description}
                     </label>
                   </div>
                 </div>
@@ -99,6 +131,14 @@ function ProductDetailScreen() {
           ) : null}
         </div>
       </div>
+      {auth.user ? (
+        <ProductUpdateForm
+          data={product}
+          isOpen={drawer}
+          onClose={() => setDrawer(false)}
+          refetch={refetch}
+        />
+      ) : null}
     </UserMain>
   );
 }
