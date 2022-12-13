@@ -1,11 +1,5 @@
-type LayoutFilterForm = {
-  keyword?: string;
-  categoryId?: number;
-};
-
 type LayoutDefaultState = {
-  filterDrawer: boolean;
-  filterForm: LayoutFilterForm;
+  isOpenGlobalLoader: boolean;
 };
 
-export type { LayoutFilterForm, LayoutDefaultState };
+export type { LayoutDefaultState };

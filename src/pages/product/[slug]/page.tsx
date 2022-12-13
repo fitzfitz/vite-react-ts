@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UserMain from "@tm-wear/app/layout/main/UserMain";
 import useAuthStore from "@tm-wear/app/store/zustand/auth/useAuth";
 import styles from "./ProductID.module.scss";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { productDetailFetcher } from "@tm-wear/app/api/fetcher/product";
 import { Carousel } from "flowbite-react";
 import { FiEdit, FiPlusSquare } from "react-icons/fi";
@@ -69,6 +69,7 @@ function ProductDetailScreen() {
                       <Carousel slide={false}>
                         {product?.product_images.map((image) => (
                           <img
+                            loading="lazy"
                             key={image?.id}
                             src={image?.image}
                             alt={product?.name}
@@ -79,7 +80,15 @@ function ProductDetailScreen() {
                   </div>
                 </div>
                 <div className={styles.detail}>
-                  <label className={styles.productTitle}>{product.name}</label>
+                  <label className={styles.productTitle}>
+                    <span className={styles.productName}>{product.name}</span>
+                    {!auth?.user && product?.product_price ? (
+                      <span className={styles.productOwner}>
+                        {" "}
+                        By <Link to={`/@${reseller}`}>{reseller}</Link>
+                      </span>
+                    ) : null}
+                  </label>
                   <div className={styles.productDetail}>
                     <div className={styles.productDetailContent}>
                       <label
@@ -122,7 +131,7 @@ function ProductDetailScreen() {
                   <div className={styles.productDesc}>
                     <label className={styles.productDescText}>
                       {product?.product_price?.description ||
-                        product.description}
+                        "Deskripsi tidak tersedia"}
                     </label>
                   </div>
                 </div>

@@ -1,31 +1,21 @@
 import create from "zustand";
-import {
-  LayoutDefaultState,
-  LayoutFilterForm,
-} from "@tm-wear/app/api/types/layout";
+import { LayoutDefaultState } from "@tm-wear/app/api/types/layout";
 
 export interface LayoutState extends LayoutDefaultState {
-  setForm: (formData: LayoutFilterForm) => void;
-  setFilterDrawer: () => void;
+  toogleGlobalLoader: () => void;
 }
 
 const defaultStore = {
-  filterDrawer: false,
-  filterForm: {
-    keyword: "",
-    categoryId: 0,
-  },
+  isOpenGlobalLoader: false,
 } as LayoutDefaultState;
 
 const useLayoutStore = create<LayoutState>()((set) => ({
   ...defaultStore,
-  setForm: (formData: LayoutFilterForm) =>
+  toogleGlobalLoader: () => {
     set((state) => ({
       ...defaultStore,
-      filterForm: { ...state.filterForm, ...formData },
-    })),
-  setFilterDrawer: () => {
-    set((state) => ({ ...defaultStore, filterDrawer: !state.filterDrawer }));
+      isOpenGlobalLoader: !state.isOpenGlobalLoader,
+    }));
   },
 }));
 

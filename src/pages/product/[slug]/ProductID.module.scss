@@ -21,7 +21,16 @@
   @apply flex flex-col md:py-16;
 }
 .productTitle {
-  @apply mb-10 text-5xl font-thin;
+  @apply mb-10 flex flex-col text-5xl font-thin;
+}
+.productName {
+  @apply mb-2;
+}
+.productOwner {
+  @apply text-[16px] text-gray-400;
+  a {
+    @apply text-blue-600 underline;
+  }
 }
 .productDetail {
   @apply mb-10;

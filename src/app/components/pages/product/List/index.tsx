@@ -12,12 +12,14 @@ import TMDrawer from "@tm-wear/components/TMDrawer";
 import { productCategoryFetcher } from "@tm-wear/app/api/fetcher/product";
 import { useQuery } from "@tanstack/react-query";
 import CategoriesCard from "../CategoriesCard";
+import SkeletonCard from "../Card/Skeleton";
 
 interface Props {
   dataSet: ProductType[];
   isLast?: boolean;
   isLoad?: boolean;
   error?: unknown;
+  isInitialLoading?: boolean;
   loadMore?: () => void;
 }
 
@@ -26,20 +28,29 @@ function ProductListContent({
   isLast,
   isLoad,
   error,
+  isInitialLoading,
   loadMore,
 }: Props) {
   const navigate = useNavigate();
   return (
     <>
-      <div className={styles.imageContainer}>
-        {dataSet?.map((product: ProductType) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onClick={() => navigate("product/" + product.slug)}
-          />
-        ))}
-      </div>
+      {isInitialLoading ? (
+        <div className={styles.imageContainer}>
+          {[...Array(10).keys()].map((x, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.imageContainer}>
+          {dataSet?.map((product: ProductType) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onClick={() => navigate("product/" + product.slug)}
+            />
+          ))}
+        </div>
+      )}
       {(dataSet?.length === 0 && !isLoad) || error ? (
         <div className="text-center text-2xl font-bold text-red-500">
           Ooops, tidak ada produk ditemukan
@@ -78,12 +89,17 @@ function ProductList({ user }: { user: string }) {
     })
   );
 
-  const { error, data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useFetchProductList(
-      { ...filter, keyword: debouncedFilter },
-      { reseller: user }
-    );
-
+  const {
+    error,
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isInitialLoading,
+  } = useFetchProductList(
+    { ...filter, keyword: debouncedFilter },
+    { reseller: user }
+  );
   return (
     <div className={styles.root}>
       <div className={styles.filterContainer}>
@@ -107,12 +123,14 @@ function ProductList({ user }: { user: string }) {
           <FcSettings size={22} />
         </button>
       </div>
+
       <ProductListContent
         error={error}
         dataSet={data?.pages.map((each) => each?.data)?.flat() as ProductType[]}
         loadMore={fetchNextPage}
         isLast={!hasNextPage}
         isLoad={isFetchingNextPage}
+        isInitialLoading={isInitialLoading}
       />
 
       <TMDrawer

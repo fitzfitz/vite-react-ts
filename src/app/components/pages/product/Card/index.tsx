@@ -1,7 +1,6 @@
 import React from "react";
 import { differenceInDays } from "date-fns";
 import styles from "./Card.module.scss";
-import { Carousel } from "flowbite-react";
 import { ProductType } from "@tm-wear/app/api/types/product";
 
 interface Props {
@@ -18,20 +17,13 @@ function ProductCard({ product, onClick }: Props) {
     >
       <div>
         <div className={styles.container}>
-          {product.product_images.length === 1 ? (
-            <img src={product?.product_images[0]?.image} alt={product?.name} />
-          ) : (
-            <Carousel
-              indicators={false}
-              slide={false}
-              leftControl={" "}
-              rightControl={" "}
-            >
-              {product.product_images.map((image) => (
-                <img key={image.id} src={image?.image} alt={product?.name} />
-              ))}
-            </Carousel>
-          )}
+          <img
+            src={`${
+              product?.product_images.find((x) => x.isPrimary)?.image ||
+              product?.product_images[0]?.image
+            }&size=20`}
+            alt={product?.name}
+          />
         </div>
         {/* {product?.createdAt ? (
           <div className={styles.dateAdded}>
@@ -45,11 +37,23 @@ function ProductCard({ product, onClick }: Props) {
             <div className={styles.ribbon}>New</div>
           </div>
         ) : null}
-        {product.product_price ? (
+        {/* {product.product_price ? (
           <div className={styles.price}>
             <div>Rp. {(+product.product_price.price).toLocaleString()}</div>
           </div>
-        ) : null}
+        ) : null} */}
+        <div className={styles.info}>
+          <div title={product?.name} className={styles.productName}>
+            {product?.name}
+          </div>
+          {product?.product_price?.price ? (
+            <div className={styles.productPrice}>
+              Rp. {(+product.product_price.price).toLocaleString()}
+            </div>
+          ) : (
+            <div className={styles.productPriceUnavailable}>Tidak tersedia</div>
+          )}
+        </div>
       </div>
     </div>
   );
