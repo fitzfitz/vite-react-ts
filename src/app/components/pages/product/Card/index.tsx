@@ -4,11 +4,12 @@ import styles from "./Card.module.scss";
 import { ProductType } from "@tm-wear/app/api/types/product";
 
 interface Props {
+  reseller?: string;
   product: ProductType;
   onClick?: (product: ProductType) => void;
 }
 
-function ProductCard({ product, onClick }: Props) {
+function ProductCard({ reseller, product, onClick }: Props) {
   return (
     <div
       className={styles.card}
@@ -46,13 +47,13 @@ function ProductCard({ product, onClick }: Props) {
           <div title={product?.name} className={styles.productName}>
             {product?.name}
           </div>
-          {product?.product_price?.price ? (
+          {reseller && reseller !== "" && product?.product_price?.price ? (
             <div className={styles.productPrice}>
               Rp. {(+product.product_price.price).toLocaleString()}
             </div>
-          ) : (
+          ) : reseller && reseller !== "" && !product?.product_price?.price ? (
             <div className={styles.productPriceUnavailable}>Tidak tersedia</div>
-          )}
+          ) : null}
         </div>
       </div>
     </div>

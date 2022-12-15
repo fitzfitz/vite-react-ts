@@ -4,7 +4,7 @@ import { FcSettings, FcSearch, FcPlus } from "react-icons/fc";
 import { ProductType } from "@tm-wear/app/api/types/product";
 import ProductCard from "../Card";
 import styles from "./ProductList.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFetchProductList } from "@tm-wear/app/api/hooks/useFetchProduct";
 import useProductListStore from "@tm-wear/app/store/zustand/productList/useProductList";
 import useDebounce from "@tm-wear/app/utils/useDebounce";
@@ -32,6 +32,7 @@ function ProductListContent({
   loadMore,
 }: Props) {
   const navigate = useNavigate();
+  const { user: reseller } = useParams();
   return (
     <>
       {isInitialLoading ? (
@@ -44,6 +45,7 @@ function ProductListContent({
         <div className={styles.imageContainer}>
           {dataSet?.map((product: ProductType) => (
             <ProductCard
+              reseller={reseller}
               key={product.id}
               product={product}
               onClick={() => navigate("product/" + product.slug)}
