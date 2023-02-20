@@ -8,4 +8,11 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@tm-wear", replacement: path.resolve(__dirname, "src") }],
   },
+  server: {
+    port: 3100,
+    open: true,
+  },
+  optimizeDeps: {
+    force: true,
+  },
 });

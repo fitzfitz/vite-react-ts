@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { ProductParamsType } from "@tm-wear/app/api/types/product";
 
 export interface ProductListState {
@@ -11,6 +11,7 @@ const defaultStore = {
     keyword: "",
     limit: 10,
     page: 1,
+    product_category_id: 0,
   } as ProductParamsType,
 };
 

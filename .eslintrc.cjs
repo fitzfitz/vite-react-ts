@@ -32,5 +32,5 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "import"],
   rules: {},
-  ignorePatterns: ["*.cjs"],
+  ignorePatterns: ["*.cjs", "vite.config.ts"],
 };

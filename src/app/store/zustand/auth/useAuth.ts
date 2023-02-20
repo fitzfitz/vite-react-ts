@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AuthDefaultState } from "@tm-wear/app/api/types/auth";
 
@@ -24,7 +24,7 @@ const useAuthStore = create<AuthState>()(
         useAuthStore.persist.clearStorage();
       },
     }),
-    { name: "auth", getStorage: () => localStorage }
+    { name: "auth" }
   )
 );
 

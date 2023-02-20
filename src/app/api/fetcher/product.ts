@@ -33,9 +33,9 @@ const productDetailFetcher = async ({ url, headers }: Props) =>
       throw data;
     });
 
-const productCategoryFetcher = async ({ url }: Props) =>
+const productCategoryFetcher = async () =>
   await client
-    .get(url)
+    .get("/catalog/product-category/")
     .then(({ data }: AxiosResponse<BaseApiResponse<ProductCategoryType[]>>) => {
       return data.success ? data?.data : null;
     })

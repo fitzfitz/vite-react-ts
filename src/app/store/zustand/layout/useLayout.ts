@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { LayoutDefaultState } from "@tm-wear/app/api/types/layout";
 
 export interface LayoutState extends LayoutDefaultState {

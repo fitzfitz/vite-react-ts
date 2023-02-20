@@ -9,10 +9,9 @@ const client = axios.create({
 client.interceptors.request.use(
   (config) => {
     const state = useAuthStore.getState();
-    config.headers = {
-      ...config.headers,
-      Authorization: state.token ? `Bearer ${state.token}` : undefined,
-    };
+    if (state.token) {
+      config.headers["Authorization"] = `Bearer ${state.token}`;
+    }
     return config;
   },
   (error) => {

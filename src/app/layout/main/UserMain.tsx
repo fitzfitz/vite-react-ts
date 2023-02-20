@@ -1,6 +1,7 @@
 import { AuthState } from "@tm-wear/app/store/zustand/auth/useAuth";
 import React, { useEffect } from "react";
-import Header from "../header";
+import Footer from "../Footer";
+import Header from "../Header";
 
 interface Props {
   auth: AuthState;
@@ -19,7 +20,8 @@ function UserMain({ auth, children, title, homeUrl }: Props) {
   return (
     <>
       <Header homeUrl={homeUrl} logout={auth.logout} user={auth.user} />
-      {children}
+      <div className="min-h-[calc(100%_-_89px)] flex-1">{children}</div>
+      <Footer />
     </>
   );
 }
