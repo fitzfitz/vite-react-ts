@@ -27,7 +27,7 @@ jobs:
         run: |
           pnpm i
           pnpm build
-    
+
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
@@ -36,3 +36,11 @@ jobs:
           FOLDER: dist # The directory where your assets are generated
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
           MESSAGE: "Build: ({sha}) {msg}" # The commit message
+
+      - name: Upload to server
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+        with:
+          server: 45.13.255.56
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/wear.themonograf.com/
