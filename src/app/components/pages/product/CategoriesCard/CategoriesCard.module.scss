@@ -1,9 +1,0 @@
-.card {
-  @apply aspect-w-[2.5] aspect-h-1 relative cursor-pointer overflow-hidden rounded-lg bg-black/[0.6] bg-[url('/assets/autumn-clothes.svg')] bg-cover bg-center bg-no-repeat text-white bg-blend-overlay;
-}
-.cardContainer {
-  @apply flex items-center justify-center;
-}
-.isActive {
-  @apply absolute right-3 top-3;
-}
