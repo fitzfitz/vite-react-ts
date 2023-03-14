@@ -11,6 +11,7 @@ function Provider({ children }: Props) {
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: false,
+        refetchOnMount: false,
         retry: false,
         cacheTime: 0,
       },

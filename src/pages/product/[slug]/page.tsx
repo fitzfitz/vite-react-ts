@@ -40,19 +40,23 @@ function ProductDetailScreen() {
     >
       <div className="px-4 py-4 lg:py-6 lg:px-6">
         <div className="mx-auto grid max-w-screen-lg">
-          {!product && error ? <NoDataFound /> : null}
+          {!product && error ? (
+            <div className="py-10">
+              <NoDataFound />
+            </div>
+          ) : null}
           {product ? (
             <>
               {auth.user ? (
                 <ProductUpdate product={product} onOpenForm={setDrawer} />
               ) : null}
 
-              <div className="mb-4 grid grid-cols-1 gap-10 rounded-sm bg-white p-4 shadow-sm md:grid-cols-2 lg:mb-6">
+              <div className="mb-4 grid grid-cols-1 gap-10 rounded-lg border bg-white p-4 shadow-md md:grid-cols-2 lg:mb-6">
                 <ProductCarousel product={product} />
                 <ProductContent product={product} reseller={reseller || ""} />
               </div>
               <div className="mb-4 grid grid-cols-1 gap-10 lg:mb-6">
-                <Reseller />
+                <Reseller reseller={reseller || ""} />
               </div>
             </>
           ) : null}

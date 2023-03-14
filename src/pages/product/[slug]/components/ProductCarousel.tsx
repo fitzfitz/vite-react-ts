@@ -18,7 +18,7 @@ const ProductCarousel: React.FC<Props> = ({ product }) => {
       <div className="aspect-w-1 aspect-h-1 mb-2">
         <div className="h-full">
           {/* <Carousel slide={false}>
-            {product?.product_images.map((image) => (
+            {product?.productImage.map((image) => (
               <img
                 loading="lazy"
                 key={image?.id}
@@ -40,7 +40,7 @@ const ProductCarousel: React.FC<Props> = ({ product }) => {
                 thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
             }}
           >
-            {product?.product_images.map((image) => (
+            {product?.productImage.map((image) => (
               <SwiperSlide className="relative" key={image.id}>
                 <InnerImageZoom
                   src={image?.image}
@@ -53,7 +53,7 @@ const ProductCarousel: React.FC<Props> = ({ product }) => {
           </Swiper>
         </div>
       </div>
-      {product?.product_images?.length > 0 ? (
+      {product?.productImage?.length > 0 ? (
         <Swiper
           navigation={true}
           onSwiper={setThumbsSwiper}
@@ -64,7 +64,7 @@ const ProductCarousel: React.FC<Props> = ({ product }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper"
         >
-          {product?.product_images.map((image) => (
+          {product?.productImage.map((image) => (
             <SwiperSlide className="relative border opacity-30" key={image.id}>
               <img
                 loading="lazy"

@@ -10,13 +10,13 @@ interface Props {
 const ProductUpdate: React.FC<Props> = ({ product, onOpenForm }) => {
   return (
     <div className=" mb-4 flex items-center justify-between rounded-sm bg-green-100 p-3 text-sm text-black/60 shadow-sm">
-      {product?.product_price?.price ? (
+      {product.productItem ? (
         <span>Atur ulang produk ini?</span>
       ) : (
         <span>Anda belum mengatur produk ini. Atur sekarang?</span>
       )}
       <div>
-        {product?.product_price?.price ? (
+        {product.productItem ? (
           <button onClick={() => onOpenForm(true)}>
             <FiEdit size={17} />
           </button>

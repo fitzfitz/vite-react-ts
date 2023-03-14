@@ -17,6 +17,11 @@ interface Props {
 function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
   const [enable, setEnable] = useState<boolean>(true);
   const [price, setPrice] = useState<string>("");
+  const [shopee, setShopee] = useState<string>(data?.productItem?.shopee || "");
+  const [tokopedia, setTokopedia] = useState<string>(
+    data?.productItem?.tokopedia || ""
+  );
+  const [link, setLink] = useState<string>(data?.productItem?.link || "");
   const [description, setDescription] = useState<string>("");
   const toogleGlobalLoader = useLayoutStore(
     (state) => state.toogleGlobalLoader
@@ -24,25 +29,28 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
 
   const mutation = useMutation({
     mutationFn: () => {
-      return client.post(`/catalog/reseller/price`, {
+      return client.post(`/catalog/reseller/item`, {
         product_id: data?.id || undefined,
         price: +price,
         description: description,
         enable: enable,
-        id: data?.product_price?.id || undefined,
+        shopee: shopee ?? null,
+        tokopedia: tokopedia ?? null,
+        link: link ?? null,
+        productId: data?.productItem?.id || undefined,
       });
     },
     onMutate: () => {
       toogleGlobalLoader();
     },
-    onSettled: (data, error) => {
-      if (data?.data?.success) {
+    onSettled: (resp, error) => {
+      if (resp?.data?.success) {
         TMToast.toast.success("Sukses mengubah info produk");
         refetch();
         setTimeout(() => {
           onClose();
         }, 1000);
-      } else if (!data?.data?.success || error) {
+      } else if (!resp?.data?.success || error) {
         TMToast.toast.error("Gagal mengubah info produk");
       }
       setTimeout(toogleGlobalLoader, 1000);
@@ -55,9 +63,9 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
 
   useEffect(() => {
     if (data && isOpen) {
-      setPrice(data?.product_price?.price || "");
-      setDescription(data?.product_price?.description || "");
-      setEnable(!!data?.product_price?.enable);
+      setPrice(data.productItem?.price || "");
+      setDescription(data.productItem?.description || "");
+      setEnable(!!data.productItem?.enable);
     } else {
       setPrice("");
       setDescription("");
@@ -90,8 +98,56 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
           onChange={(e) => setPrice(e.target.value)}
         />
         <span className="block text-right text-[0.775rem] font-bold italic text-gray-400">
-          Harga dasar: {Number(data?.price)?.toLocaleString()}
+          Harga dasar: {Number(data?.catalogPrice)?.toLocaleString()}
         </span>
+      </div>
+      <div className="mb-4">
+        <label
+          className="mb-2 block text-sm font-bold text-gray-700"
+          htmlFor="shopeeInput"
+        >
+          Shopee
+        </label>
+        <input
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+          id="shopeeInput"
+          type="text"
+          placeholder="Input url shopee..."
+          value={shopee}
+          onChange={(e) => setShopee(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="mb-2 block text-sm font-bold text-gray-700"
+          htmlFor="tokpedInput"
+        >
+          Tokopedia
+        </label>
+        <input
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+          id="tokpedInput"
+          type="text"
+          placeholder="Input url tokopedia..."
+          value={tokopedia}
+          onChange={(e) => setTokopedia(e.target.value)}
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="mb-2 block text-sm font-bold text-gray-700"
+          htmlFor="linkInput"
+        >
+          Olshop lain
+        </label>
+        <input
+          className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+          id="linkInput"
+          type="text"
+          placeholder="Input url olshop lainnya..."
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+        />
       </div>
 
       <div className="mb-4">

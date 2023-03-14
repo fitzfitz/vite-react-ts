@@ -20,8 +20,8 @@ function ProductCard({ reseller, product, onClick }: Props) {
         <div className={styles.container}>
           <img
             src={`${
-              product?.product_images.find((x) => x.isPrimary)?.image ||
-              product?.product_images[0]?.image
+              product?.productImage.find((x) => x.isPrimary)?.image ||
+              product?.productImage[0]?.image
             }&size=20`}
             alt={product?.name}
           />
@@ -33,7 +33,8 @@ function ProductCard({ reseller, product, onClick }: Props) {
             })}
           </div>
         ) : null} */}
-        {differenceInDays(new Date(), new Date(product.createdAt)) <= 7 ? (
+        {product.createdAt &&
+        differenceInDays(new Date(), new Date(product.createdAt)) <= 7 ? (
           <div className={styles.ribbonContainer}>
             <div className={styles.ribbon}>New</div>
           </div>
@@ -47,11 +48,11 @@ function ProductCard({ reseller, product, onClick }: Props) {
           <div title={product?.name} className={styles.productName}>
             {product?.name}
           </div>
-          {reseller && reseller !== "" && product?.product_price?.price ? (
+          {reseller && reseller !== "" && product.productItem?.price ? (
             <div className={styles.productPrice}>
-              Rp. {(+product.product_price.price).toLocaleString()}
+              Rp. {(+product?.productItem?.price).toLocaleString()}
             </div>
-          ) : reseller && reseller !== "" && !product?.product_price?.price ? (
+          ) : reseller && reseller !== "" && !product.productItem?.price ? (
             <div className={styles.productPriceUnavailable}>Tidak tersedia</div>
           ) : null}
         </div>

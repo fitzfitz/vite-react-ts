@@ -14,6 +14,20 @@ type ProductImageType = {
   updatedAt: string;
 };
 
+type ProductItemType = {
+  id: number;
+  description: string;
+  enable: boolean;
+  price: string;
+  productId: number;
+  resellerId: number;
+  link?: string;
+  shopee?: string;
+  tokopedia?: string;
+  updatedAt?: string;
+  createdAt?: string;
+};
+
 type ProductPriceType = {
   createdAt: string | null;
   id: number;
@@ -26,18 +40,23 @@ type ProductPriceType = {
 };
 
 type ProductType = {
-  createdAt: string;
+  createdAt: string | null;
   deletedAt: string | null;
-  description: string;
+  updatedAt: string | null;
   id: number;
   name: string;
+  description: string;
   productCategoryId: number;
-  product_images: ProductImageType[];
-  product_price: ProductPriceType | undefined;
-  price: string;
-  updatedAt: string | null;
+  basicPrice: string | null;
+  catalogPrice: string | null;
+  minLivePrice: string | null;
+  olshopPrice: string | null;
   slug: string;
   variant: string;
+  code: string | null;
+  isSold: boolean;
+  productImage: ProductImageType[];
+  productItem?: ProductItemType;
 };
 
 type ProductCategoryType = {

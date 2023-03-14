@@ -20,7 +20,7 @@ function UserMain({ auth, children, title, homeUrl }: Props) {
   return (
     <>
       <Header homeUrl={homeUrl} logout={auth.logout} user={auth.user} />
-      <div className="min-h-[calc(100%_-_89px)] flex-1">{children}</div>
+      <div className="min-h-[calc(100vh_-_89px)] flex-1">{children}</div>
       <Footer />
     </>
   );
