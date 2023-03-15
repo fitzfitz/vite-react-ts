@@ -15,13 +15,12 @@ interface Props {
 }
 
 function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
+  console.log(data);
   const [enable, setEnable] = useState<boolean>(true);
   const [price, setPrice] = useState<string>("");
-  const [shopee, setShopee] = useState<string>(data?.productItem?.shopee || "");
-  const [tokopedia, setTokopedia] = useState<string>(
-    data?.productItem?.tokopedia || ""
-  );
-  const [link, setLink] = useState<string>(data?.productItem?.link || "");
+  const [shopee, setShopee] = useState<string>("");
+  const [tokopedia, setTokopedia] = useState<string>("");
+  const [link, setLink] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const toogleGlobalLoader = useLayoutStore(
     (state) => state.toogleGlobalLoader
@@ -33,9 +32,9 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
         price: +price,
         description: description,
         enable: enable,
-        shopee: shopee ?? null,
-        tokopedia: tokopedia ?? null,
-        link: link ?? null,
+        shopee: shopee || null,
+        tokopedia: tokopedia || null,
+        link: link || null,
         productId: data?.id || undefined,
         id: data?.productItem?.id || undefined,
       });
@@ -65,10 +64,16 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
     if (data && isOpen) {
       setPrice(data.productItem?.price || "");
       setDescription(data.productItem?.description || "");
+      setShopee(data.productItem?.shopee || "");
+      setTokopedia(data.productItem?.tokopedia || "");
+      setLink(data.productItem?.link || "");
       setEnable(!!data.productItem?.enable);
     } else {
       setPrice("");
       setDescription("");
+      setShopee("");
+      setTokopedia("");
+      setLink("");
       setEnable(false);
     }
   }, [data, isOpen]);
