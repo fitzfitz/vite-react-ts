@@ -30,14 +30,14 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
   const mutation = useMutation({
     mutationFn: () => {
       return client.post(`/catalog/reseller/item`, {
-        product_id: data?.id || undefined,
         price: +price,
         description: description,
         enable: enable,
         shopee: shopee ?? null,
         tokopedia: tokopedia ?? null,
         link: link ?? null,
-        productId: data?.productItem?.id || undefined,
+        productId: data?.id || undefined,
+        id: data?.productItem?.id || undefined,
       });
     },
     onMutate: () => {
