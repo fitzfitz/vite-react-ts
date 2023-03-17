@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import client from "@tm-wear/app/utils/axiosClient";
 import useLayoutStore from "@tm-wear/app/store/zustand/layout/useLayout";
 import { TMToast } from "@tm-wear/app/components/Toaster";
+import { NumericFormat } from "react-number-format";
 
 interface Props {
   data?: ProductType | null;
@@ -15,9 +16,8 @@ interface Props {
 }
 
 function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
-  console.log(data);
   const [enable, setEnable] = useState<boolean>(true);
-  const [price, setPrice] = useState<string>("");
+  const [price, setPrice] = useState<number | string>("");
   const [shopee, setShopee] = useState<string>("");
   const [tokopedia, setTokopedia] = useState<string>("");
   const [link, setLink] = useState<string>("");
@@ -94,13 +94,24 @@ function ProductUpdateForm({ data, isOpen, onClose, refetch }: Props) {
         >
           Harga
         </label>
-        <input
+        <NumericFormat
+          required
+          placeholder="Input price"
+          name="price"
+          id="price"
           className="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
-          id="priceInput"
-          type="text"
-          placeholder="Input price..."
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          allowNegative={false}
+          thousandSeparator=","
+          prefix={"Rp. "}
+          decimalScale={0}
+          isAllowed={(values) => {
+            const { floatValue } = values;
+            return (floatValue || 0) <= 99999999;
+          }}
+          value={price || ""}
+          onValueChange={(values) => {
+            setPrice(values.floatValue || "");
+          }}
         />
         <span className="block text-right text-[0.775rem] font-bold italic text-gray-400">
           Harga dasar: {Number(data?.catalogPrice)?.toLocaleString()}
